@@ -128,7 +128,9 @@ alter table oauthtoken auto_increment = 1;
 ```
 
 #### Note
-
+The Database persistence requires the following libraries
+- [mysql-connector](https://pypi.org/project/mysql-connector/)
+- [mysql-connector-python](https://pypi.org/project/mysql-connector-python/)
 
 #### Create DBStore object
 
