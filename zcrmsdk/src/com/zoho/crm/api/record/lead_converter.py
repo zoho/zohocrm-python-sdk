@@ -17,6 +17,7 @@ class LeadConverter(object):
 		self.__contacts = None
 		self.__assign_to = None
 		self.__deals = None
+		self.__carry_over_tags = None
 		self.__key_modified = dict()
 
 	def get_overwrite(self):
@@ -191,6 +192,35 @@ class LeadConverter(object):
 		
 		self.__deals = deals
 		self.__key_modified['Deals'] = 1
+
+	def get_carry_over_tags(self):
+		"""
+		The method to get the carry_over_tags
+
+		Returns:
+			CarryOverTags: An instance of CarryOverTags
+		"""
+
+		return self.__carry_over_tags
+
+	def set_carry_over_tags(self, carry_over_tags):
+		"""
+		The method to set the value to carry_over_tags
+
+		Parameters:
+			carry_over_tags (CarryOverTags) : An instance of CarryOverTags
+		"""
+
+		try:
+			from zcrmsdk.src.com.zoho.crm.api.record.carry_over_tags import CarryOverTags
+		except Exception:
+			from .carry_over_tags import CarryOverTags
+
+		if carry_over_tags is not None and not isinstance(carry_over_tags, CarryOverTags):
+			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: carry_over_tags EXPECTED TYPE: CarryOverTags', None, None)
+		
+		self.__carry_over_tags = carry_over_tags
+		self.__key_modified['carry_over_tags'] = 1
 
 	def is_key_modified(self, key):
 		"""

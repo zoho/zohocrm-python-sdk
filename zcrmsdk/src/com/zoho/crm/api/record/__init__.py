@@ -2,7 +2,7 @@ from .deleted_record import DeletedRecord
 from .criteria import Criteria
 from .file_details import FileDetails
 from .pricing_details import PricingDetails
-from .record_operations import RecordOperations, GetRecordParam, GetRecordHeader, DeleteRecordParam, GetRecordsParam, GetRecordsHeader, DeleteRecordsParam, GetDeletedRecordsParam, GetDeletedRecordsHeader, SearchRecordsParam, GetMassUpdateStatusParam
+from .record_operations import RecordOperations, GetRecordParam, GetRecordHeader, UpdateRecordHeader, DeleteRecordParam, DeleteRecordHeader, GetRecordsParam, GetRecordsHeader, UpdateRecordsHeader, DeleteRecordsParam, DeleteRecordsHeader, UpsertRecordsHeader, GetDeletedRecordsParam, GetDeletedRecordsHeader, SearchRecordsParam, SearchRecordsHeader, GetMassUpdateStatusParam
 from .api_exception import APIException
 from .response_handler import ResponseHandler
 from .action_response import ActionResponse
@@ -38,6 +38,7 @@ from .mass_update_response_handler import MassUpdateResponseHandler
 from .inventory_line_items import InventoryLineItems
 from .line_item_product import LineItemProduct
 from .field import Field
+from .carry_over_tags import CarryOverTags
 from .response_wrapper import ResponseWrapper
 from .comment import Comment
 from .mass_update_success_response import MassUpdateSuccessResponse

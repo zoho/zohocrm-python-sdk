@@ -67,7 +67,7 @@ class RecordOperations(object):
 			from .response_handler import ResponseHandler
 		return handler_instance.api_call(ResponseHandler.__module__, 'application/json')
 
-	def update_record(self, id, module_api_name, request):
+	def update_record(self, id, module_api_name, request, header_instance=None):
 		"""
 		The method to update record
 
@@ -75,6 +75,7 @@ class RecordOperations(object):
 			id (int) : An int representing the id
 			module_api_name (string) : A string representing the module_api_name
 			request (BodyWrapper) : An instance of BodyWrapper
+			header_instance (HeaderMap) : An instance of HeaderMap
 
 		Returns:
 			APIResponse: An instance of APIResponse
@@ -97,6 +98,9 @@ class RecordOperations(object):
 		if request is not None and not isinstance(request, BodyWrapper):
 			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: request EXPECTED TYPE: BodyWrapper', None, None)
 		
+		if header_instance is not None and not isinstance(header_instance, HeaderMap):
+			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: header_instance EXPECTED TYPE: HeaderMap', None, None)
+		
 		handler_instance = CommonAPIHandler()
 		api_path = ''
 		api_path = api_path + '/crm/v2/'
@@ -108,6 +112,7 @@ class RecordOperations(object):
 		handler_instance.set_category_method(Constants.REQUEST_CATEGORY_UPDATE)
 		handler_instance.set_content_type('application/json')
 		handler_instance.set_request(request)
+		handler_instance.set_header(header_instance)
 		Utility.get_fields(module_api_name)
 		handler_instance.set_module_api_name(module_api_name)
 		try:
@@ -116,7 +121,7 @@ class RecordOperations(object):
 			from .action_handler import ActionHandler
 		return handler_instance.api_call(ActionHandler.__module__, 'application/json')
 
-	def delete_record(self, id, module_api_name, param_instance=None):
+	def delete_record(self, id, module_api_name, param_instance=None, header_instance=None):
 		"""
 		The method to delete record
 
@@ -124,6 +129,7 @@ class RecordOperations(object):
 			id (int) : An int representing the id
 			module_api_name (string) : A string representing the module_api_name
 			param_instance (ParameterMap) : An instance of ParameterMap
+			header_instance (HeaderMap) : An instance of HeaderMap
 
 		Returns:
 			APIResponse: An instance of APIResponse
@@ -141,6 +147,9 @@ class RecordOperations(object):
 		if param_instance is not None and not isinstance(param_instance, ParameterMap):
 			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: param_instance EXPECTED TYPE: ParameterMap', None, None)
 		
+		if header_instance is not None and not isinstance(header_instance, HeaderMap):
+			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: header_instance EXPECTED TYPE: HeaderMap', None, None)
+		
 		handler_instance = CommonAPIHandler()
 		api_path = ''
 		api_path = api_path + '/crm/v2/'
@@ -151,6 +160,7 @@ class RecordOperations(object):
 		handler_instance.set_http_method(Constants.REQUEST_METHOD_DELETE)
 		handler_instance.set_category_method(Constants.REQUEST_METHOD_DELETE)
 		handler_instance.set_param(param_instance)
+		handler_instance.set_header(header_instance)
 		try:
 			from zcrmsdk.src.com.zoho.crm.api.record.action_handler import ActionHandler
 		except Exception:
@@ -243,13 +253,14 @@ class RecordOperations(object):
 			from .action_handler import ActionHandler
 		return handler_instance.api_call(ActionHandler.__module__, 'application/json')
 
-	def update_records(self, module_api_name, request):
+	def update_records(self, module_api_name, request, header_instance=None):
 		"""
 		The method to update records
 
 		Parameters:
 			module_api_name (string) : A string representing the module_api_name
 			request (BodyWrapper) : An instance of BodyWrapper
+			header_instance (HeaderMap) : An instance of HeaderMap
 
 		Returns:
 			APIResponse: An instance of APIResponse
@@ -269,6 +280,9 @@ class RecordOperations(object):
 		if request is not None and not isinstance(request, BodyWrapper):
 			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: request EXPECTED TYPE: BodyWrapper', None, None)
 		
+		if header_instance is not None and not isinstance(header_instance, HeaderMap):
+			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: header_instance EXPECTED TYPE: HeaderMap', None, None)
+		
 		handler_instance = CommonAPIHandler()
 		api_path = ''
 		api_path = api_path + '/crm/v2/'
@@ -279,6 +293,7 @@ class RecordOperations(object):
 		handler_instance.set_content_type('application/json')
 		handler_instance.set_request(request)
 		handler_instance.set_mandatory_checker(True)
+		handler_instance.set_header(header_instance)
 		Utility.get_fields(module_api_name)
 		handler_instance.set_module_api_name(module_api_name)
 		try:
@@ -287,13 +302,14 @@ class RecordOperations(object):
 			from .action_handler import ActionHandler
 		return handler_instance.api_call(ActionHandler.__module__, 'application/json')
 
-	def delete_records(self, module_api_name, param_instance=None):
+	def delete_records(self, module_api_name, param_instance=None, header_instance=None):
 		"""
 		The method to delete records
 
 		Parameters:
 			module_api_name (string) : A string representing the module_api_name
 			param_instance (ParameterMap) : An instance of ParameterMap
+			header_instance (HeaderMap) : An instance of HeaderMap
 
 		Returns:
 			APIResponse: An instance of APIResponse
@@ -308,6 +324,9 @@ class RecordOperations(object):
 		if param_instance is not None and not isinstance(param_instance, ParameterMap):
 			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: param_instance EXPECTED TYPE: ParameterMap', None, None)
 		
+		if header_instance is not None and not isinstance(header_instance, HeaderMap):
+			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: header_instance EXPECTED TYPE: HeaderMap', None, None)
+		
 		handler_instance = CommonAPIHandler()
 		api_path = ''
 		api_path = api_path + '/crm/v2/'
@@ -316,19 +335,21 @@ class RecordOperations(object):
 		handler_instance.set_http_method(Constants.REQUEST_METHOD_DELETE)
 		handler_instance.set_category_method(Constants.REQUEST_METHOD_DELETE)
 		handler_instance.set_param(param_instance)
+		handler_instance.set_header(header_instance)
 		try:
 			from zcrmsdk.src.com.zoho.crm.api.record.action_handler import ActionHandler
 		except Exception:
 			from .action_handler import ActionHandler
 		return handler_instance.api_call(ActionHandler.__module__, 'application/json')
 
-	def upsert_records(self, module_api_name, request):
+	def upsert_records(self, module_api_name, request, header_instance=None):
 		"""
 		The method to upsert records
 
 		Parameters:
 			module_api_name (string) : A string representing the module_api_name
 			request (BodyWrapper) : An instance of BodyWrapper
+			header_instance (HeaderMap) : An instance of HeaderMap
 
 		Returns:
 			APIResponse: An instance of APIResponse
@@ -348,6 +369,9 @@ class RecordOperations(object):
 		if request is not None and not isinstance(request, BodyWrapper):
 			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: request EXPECTED TYPE: BodyWrapper', None, None)
 		
+		if header_instance is not None and not isinstance(header_instance, HeaderMap):
+			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: header_instance EXPECTED TYPE: HeaderMap', None, None)
+		
 		handler_instance = CommonAPIHandler()
 		api_path = ''
 		api_path = api_path + '/crm/v2/'
@@ -358,6 +382,7 @@ class RecordOperations(object):
 		handler_instance.set_category_method(Constants.REQUEST_CATEGORY_ACTION)
 		handler_instance.set_content_type('application/json')
 		handler_instance.set_request(request)
+		handler_instance.set_header(header_instance)
 		Utility.get_fields(module_api_name)
 		handler_instance.set_module_api_name(module_api_name)
 		try:
@@ -407,13 +432,14 @@ class RecordOperations(object):
 			from .deleted_records_handler import DeletedRecordsHandler
 		return handler_instance.api_call(DeletedRecordsHandler.__module__, 'application/json')
 
-	def search_records(self, module_api_name, param_instance=None):
+	def search_records(self, module_api_name, param_instance=None, header_instance=None):
 		"""
 		The method to search records
 
 		Parameters:
 			module_api_name (string) : A string representing the module_api_name
 			param_instance (ParameterMap) : An instance of ParameterMap
+			header_instance (HeaderMap) : An instance of HeaderMap
 
 		Returns:
 			APIResponse: An instance of APIResponse
@@ -428,6 +454,9 @@ class RecordOperations(object):
 		if param_instance is not None and not isinstance(param_instance, ParameterMap):
 			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: param_instance EXPECTED TYPE: ParameterMap', None, None)
 		
+		if header_instance is not None and not isinstance(header_instance, HeaderMap):
+			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: header_instance EXPECTED TYPE: HeaderMap', None, None)
+		
 		handler_instance = CommonAPIHandler()
 		api_path = ''
 		api_path = api_path + '/crm/v2/'
@@ -437,6 +466,7 @@ class RecordOperations(object):
 		handler_instance.set_http_method(Constants.REQUEST_METHOD_GET)
 		handler_instance.set_category_method(Constants.REQUEST_CATEGORY_READ)
 		handler_instance.set_param(param_instance)
+		handler_instance.set_header(header_instance)
 		Utility.get_fields(module_api_name)
 		handler_instance.set_module_api_name(module_api_name)
 		try:
@@ -569,6 +599,7 @@ class RecordOperations(object):
 		handler_instance.set_content_type('multipart/form-data')
 		handler_instance.set_request(request)
 		handler_instance.set_mandatory_checker(True)
+		Utility.verify_photo_support(module_api_name)
 		try:
 			from zcrmsdk.src.com.zoho.crm.api.record.file_handler import FileHandler
 		except Exception:
@@ -708,10 +739,19 @@ class GetRecordParam(object):
 
 class GetRecordHeader(object):
 	if_modified_since = Header('If-Modified-Since', 'com.zoho.crm.api.Record.GetRecordHeader')
+	x_external = Header('X-EXTERNAL', 'com.zoho.crm.api.Record.GetRecordHeader')
+
+
+class UpdateRecordHeader(object):
+	x_external = Header('X-EXTERNAL', 'com.zoho.crm.api.Record.UpdateRecordHeader')
 
 
 class DeleteRecordParam(object):
 	wf_trigger = Param('wf_trigger', 'com.zoho.crm.api.Record.DeleteRecordParam')
+
+
+class DeleteRecordHeader(object):
+	x_external = Header('X-EXTERNAL', 'com.zoho.crm.api.Record.DeleteRecordHeader')
 
 
 class GetRecordsParam(object):
@@ -733,11 +773,24 @@ class GetRecordsParam(object):
 
 class GetRecordsHeader(object):
 	if_modified_since = Header('If-Modified-Since', 'com.zoho.crm.api.Record.GetRecordsHeader')
+	x_external = Header('X-EXTERNAL', 'com.zoho.crm.api.Record.GetRecordsHeader')
+
+
+class UpdateRecordsHeader(object):
+	x_external = Header('X-EXTERNAL', 'com.zoho.crm.api.Record.UpdateRecordsHeader')
 
 
 class DeleteRecordsParam(object):
 	ids = Param('ids', 'com.zoho.crm.api.Record.DeleteRecordsParam')
 	wf_trigger = Param('wf_trigger', 'com.zoho.crm.api.Record.DeleteRecordsParam')
+
+
+class DeleteRecordsHeader(object):
+	x_external = Header('X-EXTERNAL', 'com.zoho.crm.api.Record.DeleteRecordsHeader')
+
+
+class UpsertRecordsHeader(object):
+	x_external = Header('X-EXTERNAL', 'com.zoho.crm.api.Record.UpsertRecordsHeader')
 
 
 class GetDeletedRecordsParam(object):
@@ -759,6 +812,10 @@ class SearchRecordsParam(object):
 	approved = Param('approved', 'com.zoho.crm.api.Record.SearchRecordsParam')
 	page = Param('page', 'com.zoho.crm.api.Record.SearchRecordsParam')
 	per_page = Param('per_page', 'com.zoho.crm.api.Record.SearchRecordsParam')
+
+
+class SearchRecordsHeader(object):
+	x_external = Header('X-EXTERNAL', 'com.zoho.crm.api.Record.SearchRecordsHeader')
 
 
 class GetMassUpdateStatusParam(object):

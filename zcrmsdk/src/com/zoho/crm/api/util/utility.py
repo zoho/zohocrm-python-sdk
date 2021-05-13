@@ -39,13 +39,24 @@ class Utility(object):
     apitype_vs_datatype = {}
     apitype_vs_structurename = {}
     new_file = False
+    module_api_name = None
     get_modified_modules = False
     force_refresh = False
     lock = threading.RLock()
     logger = logging.getLogger('SDKLogger')
 
     @staticmethod
+    def verify_photo_support(module_api_name):
+        return
+
+    @staticmethod
     def get_fields(module_api_name):
+         with Utility.lock:
+             Utility.module_api_name = module_api_name
+             Utility.get_fields_info(Utility.module_api_name)
+
+    @staticmethod
+    def get_fields_info(module_api_name):
 
         """
         This method to fetch field details of the current module for the current user and store the result in a JSON file.
@@ -183,7 +194,7 @@ class Utility(object):
             Utility.write_to_file(file_path=record_field_details_path, file_contents=record_field_details_json)
 
             for module in modified_modules:
-                Utility.get_fields(module)
+                Utility.get_fields_info(module)
 
     @staticmethod
     def delete_fields(record_field_details_json, module):
@@ -254,7 +265,7 @@ class Utility(object):
 
                 if related_list_jo[Constants.MODULE] != Constants.NULL_VALUE:
                     common_api_handler.set_module_api_name(related_list_jo[Constants.MODULE])
-                    Utility.get_fields(related_list_jo[Constants.MODULE])
+                    Utility.get_fields_info(related_list_jo[Constants.MODULE])
                 return True
 
         return False
@@ -363,7 +374,11 @@ class Utility(object):
                     Constants.STATUS: response_object.get_status().get_value(),
                     Constants.MESSAGE: response_object.get_message().get_value()
                 }
-                raise SDKException(Constants.API_EXCEPTION, None, error_response)
+                exception = SDKException(Constants.API_EXCEPTION, None, error_response)
+                if Utility.module_api_name.lower() == module_api_name.lower():
+                    raise exception
+
+                Utility.logger.error(Constants.API_EXCEPTION + exception.__str__())
 
         else:
             error_response = {
@@ -433,7 +448,7 @@ class Utility(object):
     @staticmethod
     def refresh_modules():
         Utility.force_refresh = True
-        Utility.get_fields(None)
+        Utility.get_fields_info(None)
         Utility.force_refresh = False
 
     @staticmethod
@@ -542,7 +557,7 @@ class Utility(object):
             field_detail[Constants.LOOKUP] = True
 
         if len(module) > 0:
-            Utility.get_fields(module)
+            Utility.get_fields_info(module)
 
         field_detail[Constants.NAME] = key_name
 

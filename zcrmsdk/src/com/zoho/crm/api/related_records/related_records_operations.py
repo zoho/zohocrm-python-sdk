@@ -200,13 +200,14 @@ class RelatedRecordsOperations(object):
 			from .response_handler import ResponseHandler
 		return handler_instance.api_call(ResponseHandler.__module__, 'application/json')
 
-	def update_related_record(self, related_record_id, request):
+	def update_related_record(self, related_record_id, request, header_instance=None):
 		"""
 		The method to update related record
 
 		Parameters:
 			related_record_id (int) : An int representing the related_record_id
 			request (BodyWrapper) : An instance of BodyWrapper
+			header_instance (HeaderMap) : An instance of HeaderMap
 
 		Returns:
 			APIResponse: An instance of APIResponse
@@ -226,6 +227,9 @@ class RelatedRecordsOperations(object):
 		if request is not None and not isinstance(request, BodyWrapper):
 			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: request EXPECTED TYPE: BodyWrapper', None, None)
 		
+		if header_instance is not None and not isinstance(header_instance, HeaderMap):
+			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: header_instance EXPECTED TYPE: HeaderMap', None, None)
+		
 		handler_instance = CommonAPIHandler()
 		api_path = ''
 		api_path = api_path + '/crm/v2/'
@@ -241,6 +245,7 @@ class RelatedRecordsOperations(object):
 		handler_instance.set_category_method(Constants.REQUEST_CATEGORY_UPDATE)
 		handler_instance.set_content_type('application/json')
 		handler_instance.set_request(request)
+		handler_instance.set_header(header_instance)
 		Utility.get_related_lists(self.__related_list_api_name, self.__module_api_name, handler_instance)
 		try:
 			from zcrmsdk.src.com.zoho.crm.api.related_records.action_handler import ActionHandler
@@ -248,12 +253,13 @@ class RelatedRecordsOperations(object):
 			from .action_handler import ActionHandler
 		return handler_instance.api_call(ActionHandler.__module__, 'application/json')
 
-	def delink_record(self, related_record_id):
+	def delink_record(self, related_record_id, header_instance=None):
 		"""
 		The method to delink record
 
 		Parameters:
 			related_record_id (int) : An int representing the related_record_id
+			header_instance (HeaderMap) : An instance of HeaderMap
 
 		Returns:
 			APIResponse: An instance of APIResponse
@@ -264,6 +270,9 @@ class RelatedRecordsOperations(object):
 
 		if not isinstance(related_record_id, int):
 			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: related_record_id EXPECTED TYPE: int', None, None)
+		
+		if header_instance is not None and not isinstance(header_instance, HeaderMap):
+			raise SDKException(Constants.DATA_TYPE_ERROR, 'KEY: header_instance EXPECTED TYPE: HeaderMap', None, None)
 		
 		handler_instance = CommonAPIHandler()
 		api_path = ''
@@ -278,6 +287,7 @@ class RelatedRecordsOperations(object):
 		handler_instance.set_api_path(api_path)
 		handler_instance.set_http_method(Constants.REQUEST_METHOD_DELETE)
 		handler_instance.set_category_method(Constants.REQUEST_METHOD_DELETE)
+		handler_instance.set_header(header_instance)
 		try:
 			from zcrmsdk.src.com.zoho.crm.api.related_records.action_handler import ActionHandler
 		except Exception:
@@ -292,6 +302,7 @@ class GetRelatedRecordsParam(object):
 
 class GetRelatedRecordsHeader(object):
 	if_modified_since = Header('If-Modified-Since', 'com.zoho.crm.api.RelatedRecords.GetRelatedRecordsHeader')
+	x_external = Header('X-EXTERNAL', 'com.zoho.crm.api.RelatedRecords.GetRelatedRecordsHeader')
 
 
 class DelinkRecordsParam(object):
@@ -300,3 +311,11 @@ class DelinkRecordsParam(object):
 
 class GetRelatedRecordHeader(object):
 	if_modified_since = Header('If-Modified-Since', 'com.zoho.crm.api.RelatedRecords.GetRelatedRecordHeader')
+
+
+class UpdateRelatedRecordHeader(object):
+	x_external = Header('X-EXTERNAL', 'com.zoho.crm.api.RelatedRecords.UpdateRelatedRecordHeader')
+
+
+class DelinkRecordHeader(object):
+	x_external = Header('X-EXTERNAL', 'com.zoho.crm.api.RelatedRecords.DelinkRecordHeader')
