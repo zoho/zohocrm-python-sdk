@@ -71,7 +71,8 @@ class Utility(object):
             from ..initializer import Initializer
 
         last_modified_time = None
-
+        record_field_details_path = None        
+        
         try:
             with Utility.lock:
                 resources_path = os.path.join(Initializer.get_initializer().resource_path,
